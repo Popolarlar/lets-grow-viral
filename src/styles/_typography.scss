@@ -1,0 +1,38 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@100;300;400;500;700&display=swap");
+
+h1 {
+  font-size: $big-font-size;
+  font-weight: 700;
+}
+
+p,
+a {
+  font-family: 'Raleway', sans-serif;
+  font-size: $default-font-size;
+  font-weight: 300;
+}
+
+a,
+a:link,
+a:hover,
+a:visited,
+a:active {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a {
+  color:$text-color;
+  transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+
+  &:hover {
+    color: $black-color;
+  }
+
+  &.active {
+    color: $black-color;
+  }
+}
+
