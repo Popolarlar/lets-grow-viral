@@ -52,7 +52,7 @@ const App = () => {
 
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
-      <Paper>
+      <Paper elevation={0}>
         <Header {...configTheme} />
         <MainPage />
         <Footer />

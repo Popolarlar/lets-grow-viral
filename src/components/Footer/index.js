@@ -1,13 +1,23 @@
 import React from "react";
-import {
-  Container
- } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import { Typography } from "@material-ui/core";
 
-const Footer = (props) => {
-  return <div className="footer">
-    <Container maxWidth="md">
-    <h3>Hi, this is a footer</h3>
-    </Container></div>;
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    textAlign: "center",
+    marginTop: theme.spacing(5),
+    paddingBottom: theme.spacing(3),
+  },
+}));
+
+const Footer = () => {
+  const classes = useStyles();
+  return (
+    <div className={classes.root}>
+      <Typography>© MJ 2020</Typography>
+    </div>
+  );
 };
 
 export default Footer;
