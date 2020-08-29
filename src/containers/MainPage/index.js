@@ -1,16 +1,23 @@
 import React, { useState } from "react";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
-import { Button, Container, Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import { Button, Container, Typography, Fab } from "@material-ui/core";
+import AddIcon from "@material-ui/icons/Add";
 import AdList from "./../AdList";
-import NewAddForm from "../NewAdForm";
+import NewAdForm from "../NewAdForm";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    paddingTop: theme.spacing(30),
+    paddingTop: theme.spacing(20),
+    position: "relative",
   },
   title: {
     fontWeight: 700,
     paddingBottom: theme.spacing(3),
+  },
+  addButton: {
+    position: "absolute",
+    right: 0,
+    marginRight: theme.spacing(5),
   },
 }));
 
@@ -18,32 +25,36 @@ const MainPage = () => {
   const classes = useStyles();
 
   // Local State
-  const [modalOpen, setModalOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
-  // Handle Modal
-  const handleModalOpen = () => {
-    setModalOpen(true);
+  // Handle Dialog
+  const handleDialogOpen = () => {
+    setDialogOpen(true);
   };
-  const handleModalClose = () => {
-    setModalOpen(false);
+  const handleDialogClose = () => {
+    setDialogOpen(false);
   };
-  const configModal = {
-    modalOpen,
-    handleModalClose,
+  const configDialog = {
+    dialogOpen,
+    handleDialogClose,
   };
 
   return (
     <Container maxWidth="lg" className={classes.root}>
+      <Fab
+        color="primary"
+        aria-label="add"
+        onClick={handleDialogOpen}
+        className={classes.addButton}
+      >
+        <AddIcon />
+      </Fab>
+      <NewAdForm {...configDialog} />
+
       <Typography variant="h3" color="primary" className={classes.title}>
         What's hot!
       </Typography>
-      {/* <Typography variant="body1">
-        Scroll and click to see the ads from local business. Lets help each
-        others to get through this tough time :-)
-      </Typography> */}
       <AdList />
-      <Button onClick={handleModalOpen}>Add</Button>
-      <NewAddForm {...configModal} />
     </Container>
   );
 };

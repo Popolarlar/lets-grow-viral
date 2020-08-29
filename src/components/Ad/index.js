@@ -17,6 +17,7 @@ import {
 } from "@material-ui/core";
 import { Favorite, InsertComment } from "@material-ui/icons";
 import Comment from "./../Comment";
+import ComingSoonImg from "./../../assets/coming-soon.png";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,8 +72,8 @@ const Ad = ({ ad }) => {
         <CardMedia
           component="img"
           className={classes.media}
-          image={adUrl}
-          title="Contemplative Reptile"
+          image={adUrl ? adUrl : ComingSoonImg}
+          title={adTitle}
         />
         <CardHeader title={adTitle} subheader={date} />
       </CardActionArea>

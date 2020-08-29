@@ -1,22 +1,57 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Modal, Button, TextField } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import {
+  Button,
+  IconButton,
+  Typography,
+  TextField,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+} from "@material-ui/core";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import { addAdStart } from "./../../store/Ad/ad.actions";
 
-const NewAddForm = ({ modalOpen, handleModalClose }) => {
+const useStyles = makeStyles((theme) => ({
+  form: {
+    "& .MuiFormControl-root": {
+      marginBottom: theme.spacing(2),
+      width: "100%",
+    },
+    "& .MuiDialogActions-root": {
+      marginTop: theme.spacing(5),
+    },
+  },
+  success: {
+    marginBottom: theme.spacing(4),
+    display: "flex",
+    alignItems: "center",
+  },
+}));
+
+const NewAdForm = ({ dialogOpen, handleDialogClose }) => {
   // Globle State
   const dispatch = useDispatch();
 
   // Local State
-
+  const classes = useStyles();
+  const [isSubmitted, setSubmitted] = useState(false);
   const [adTitle, setAdTitle] = useState("");
   const [adDesc, setAdDesc] = useState("");
   const [adUrl, setAdUrl] = useState("");
 
+  const handleCancleClick = (e) => {
+    e.preventDefault();
+    handleDialogClose();
+    resetForm();
+  };
+
   // Handle Form
   const handleFormSubmit = (e) => {
     e.preventDefault();
-
     dispatch(
       addAdStart({
         adTitle,
@@ -25,45 +60,70 @@ const NewAddForm = ({ modalOpen, handleModalClose }) => {
       })
     );
 
-    resetForm();
+    setSubmitted(true);
+    setTimeout(() => {
+      handleDialogClose();
+      resetForm();
+    }, 3000);
   };
 
   const resetForm = () => {
-    handleModalClose();
+    handleDialogClose();
+    setSubmitted(false);
     setAdTitle("");
     setAdDesc("");
     setAdUrl("");
   };
 
+  const Form = (
+    <form
+      autoComplete="off"
+      onSubmit={handleFormSubmit}
+      className={classes.form}
+    >
+      <TextField
+        label="Title"
+        required
+        value={adTitle}
+        onChange={(e) => setAdTitle(e.target.value)}
+      />
+      <TextField
+        label="Descripition"
+        required
+        value={adDesc}
+        onChange={(e) => setAdDesc(e.target.value)}
+      />
+      <TextField
+        label="URL"
+        value={adUrl}
+        onChange={(e) => setAdUrl(e.target.value)}
+      />
+      <DialogActions>
+        <Button onClick={handleCancleClick}>Cancel</Button>
+        <Button type="submit" variant="contained" color="primary">
+          Go Viral
+        </Button>
+      </DialogActions>
+    </form>
+  );
+
+  const successMessage = (
+    <DialogContentText color="primary" className={classes.success}>
+      <IconButton aria-label="success" color="inherit">
+        <CheckCircleIcon fontSize="large" />
+      </IconButton>
+      <Typography variant="h4" color="inherit">
+        Post success!
+      </Typography>
+    </DialogContentText>
+  );
+
   return (
-    <Modal open={modalOpen} onClose={handleModalClose}>
-      <form noValidate autoComplete="off" onSubmit={handleFormSubmit}>
-        <h1>Add New Ad</h1>
-        <TextField
-          label="Title"
-          fullWidth
-          variant="outlined"
-          value={adTitle}
-          onChange={(e) => setAdTitle(e.target.value)}
-        />
-        <TextField
-          label="Descripition"
-          fullWidth
-          variant="outlined"
-          value={adDesc}
-          onChange={(e) => setAdDesc(e.target.value)}
-        />
-        <TextField
-          label="URL"
-          fullWidth
-          variant="outlined"
-          value={adUrl}
-          onChange={(e) => setAdUrl(e.target.value)}
-        />
-        <Button type="submit">Go Viral</Button>
-      </form>
-    </Modal>
+    <Dialog open={dialogOpen} onClose={handleDialogClose} maxWidth="md">
+      <DialogTitle>Share Your Idea</DialogTitle>
+      <DialogContent>{isSubmitted ? successMessage : Form}</DialogContent>
+    </Dialog>
   );
 };
 
-export default NewAddForm;
+export default NewAdForm;
