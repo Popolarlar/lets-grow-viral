@@ -2,14 +2,13 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { AppBar, Toolbar, IconButton, Switch, Box } from "@material-ui/core";
 import { Email, GitHub, LinkedIn } from "@material-ui/icons";
-// import Logo from "./../../assets/logo.svg";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
   nav: {
-    backgroundColor: "transparent",
+    backgroundColor: theme.palette.background.mask,
     boxShadow: "none",
   },
   logo: {
@@ -23,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
         width: "240px",
         height: "auto",
         "& .primary": { fill: theme.palette.text.primary },
-        "& .secondary": { fill: theme.palette.primary.main },
+        "& .secondary": { fill: "primary" },
       },
     },
   },
@@ -81,6 +80,7 @@ const Logo = () => (
     />
   </svg>
 );
+
 const Header = ({ darkMode, handleThemeToggle }) => {
   const classes = useStyles();
 

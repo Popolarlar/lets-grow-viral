@@ -7,6 +7,7 @@ import { Paper } from "@material-ui/core";
 import MainPage from "./containers/MainPage";
 import Header from "./containers/Header";
 import Footer from "./components/Footer";
+import { SportsRugbySharp } from "@material-ui/icons";
 
 const App = () => {
   // Handle theme
@@ -18,11 +19,11 @@ const App = () => {
       primary: {
         main: "#C9E265",
       },
-      secondary: {
-        main: "#a8dadc",
-      },
       text: {
         primary: "#737373",
+      },
+      background: {
+        mask: "rgba(255,255,255,0.8)",
       },
     },
     typography: {
@@ -35,9 +36,9 @@ const App = () => {
       primary: {
         main: "#C9E265",
       },
-
       background: {
         paper: "#737373",
+        mask: "rgba(255,255,255,0)",
       },
     },
     typography: {
