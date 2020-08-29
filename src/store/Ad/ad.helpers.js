@@ -1,5 +1,20 @@
 import { firestore, FieldValue } from "./../../global/firebase/utils";
 
+export const handleFetchAds = () => {
+  return new Promise((resolve, reject) => {
+    firestore
+      .collection("ads")
+      .get()
+      .then((snapshot) => {
+        const ads = snapshot.docs.map((doc) => {
+          return { ...doc.data(), documentID: doc.id };
+        });
+        resolve(ads);
+      })
+      .catch((err) => reject(err));
+  });
+};
+
 export const handleAddAd = (ad) => {
   return new Promise((resolve, reject) => {
     firestore
@@ -33,17 +48,13 @@ export const handleCommentAd = (documentID, comment) => {
   });
 };
 
-export const handleFetchAds = () => {
+export const handleDeleteAd = (documentID) => {
   return new Promise((resolve, reject) => {
     firestore
       .collection("ads")
-      .get()
-      .then((snapshot) => {
-        const ads = snapshot.docs.map((doc) => {
-          return { ...doc.data(), documentID: doc.id };
-        });
-        resolve(ads);
-      })
+      .doc(documentID)
+      .delete()
+      .then(() => resolve())
       .catch((err) => reject(err));
   });
 };

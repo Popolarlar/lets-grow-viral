@@ -1,7 +1,7 @@
 import React from "react";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import { AppBar, Toolbar, IconButton, Switch, Box } from "@material-ui/core";
-import { Menu, Email, GitHub, LinkedIn, Autorenew } from "@material-ui/icons";
+import { Email, GitHub, LinkedIn } from "@material-ui/icons";
 // import Logo from "./../../assets/logo.svg";
 
 const useStyles = makeStyles((theme) => ({
@@ -108,7 +108,7 @@ const Header = ({ darkMode, handleThemeToggle }) => {
           <a
             href="https://www.linkedin.com/in/ming-jin-yeh/"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
           >
             <IconButton aria-label="linkedIn">
               <LinkedIn />
@@ -117,7 +117,7 @@ const Header = ({ darkMode, handleThemeToggle }) => {
           <a
             href="https://github.com/Popolarlar"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
           >
             <IconButton aria-label="github">
               <GitHub />

@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { likeAdStart, commentAdStart } from "./../../store/Ad/ad.actions";
+import {
+  likeAdStart,
+  commentAdStart,
+  deleteAdStart,
+} from "./../../store/Ad/ad.actions";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Card,
@@ -15,7 +19,7 @@ import {
   TextField,
   Box,
 } from "@material-ui/core";
-import { Favorite, InsertComment } from "@material-ui/icons";
+import { Favorite, InsertComment, Delete } from "@material-ui/icons";
 import Comment from "./../Comment";
 import ComingSoonImg from "./../../assets/coming-soon.png";
 
@@ -23,6 +27,12 @@ const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: "100%",
     maxHeight: "100%",
+
+    "& .MuiCardActions-root": {
+      "& .MuiSvgIcon-root": {
+        marginRight: theme.spacing(1),
+      },
+    },
   },
   media: {
     height: 200,
@@ -66,6 +76,11 @@ const Ad = ({ ad }) => {
     setCommentText("");
   };
 
+  const handleDeleteClick = (e) => {
+    e.preventDefault();
+    dispatch(deleteAdStart(documentID));
+  };
+
   return (
     <Card className={classes.root}>
       <CardActionArea>
@@ -89,6 +104,7 @@ const Ad = ({ ad }) => {
           <Favorite />
           <Typography>{like}</Typography>
         </IconButton>
+
         <IconButton
           onClick={handleExpandClick}
           aria-expanded={expanded}
@@ -96,6 +112,15 @@ const Ad = ({ ad }) => {
         >
           <InsertComment />
           <Typography>{comments.length}</Typography>
+        </IconButton>
+
+        <IconButton
+          aria-label="delete"
+          onClick={handleDeleteClick}
+          className={classes.delete}
+        >
+          <Delete />
+          <Typography>Delete</Typography>
         </IconButton>
       </CardActions>
 

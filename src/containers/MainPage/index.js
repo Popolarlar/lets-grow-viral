@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Button, Container, Typography, Fab } from "@material-ui/core";
+import { Container, Typography, Fab } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import AdList from "./../AdList";
 import NewAdForm from "../NewAdForm";

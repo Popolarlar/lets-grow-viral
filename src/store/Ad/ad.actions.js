@@ -24,6 +24,11 @@ export const commentAdStart = (documentID, commentText) => ({
   payload: { documentID, commentText },
 });
 
+export const deleteAdStart = (documentID) => ({
+  type: adTypes.DELETE_AD_START,
+  payload: documentID,
+});
+
 export const adError = (error) => ({
   type: adTypes.AD_ERROR,
   payload: error,
