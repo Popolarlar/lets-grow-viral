@@ -6,3 +6,4 @@ import "firebase/auth";
 firebase.initializeApp(firebaseConfig);
 
 export const firestore = firebase.firestore();
+export const FieldValue = firebase.firestore.FieldValue;

@@ -1,17 +1,64 @@
-import React from "react";
-import Header from "./containers/Header";
-import AdList from "./containers/AdList";
-import Footer from "./components/Footer";
-import "./styles/main.scss";
+import React, { useState } from "react";
 
-function App() {
+// Material UI
+import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+
+import { Paper } from "@material-ui/core";
+import MainPage from "./containers/MainPage";
+import Header from "./containers/Header";
+import Footer from "./components/Footer";
+
+const App = () => {
+  // Handle theme
+  const [darkMode, setDarkMode] = useState(false);
+
+  const lightTheme = createMuiTheme({
+    palette: {
+      type: "light",
+      primary: {
+        main: "#C9E265",
+      },
+      secondary: {
+        main: "#a8dadc",
+      },
+      text: {
+        primary: "#737373",
+      },
+    },
+    typography: {
+      fontFamily: "'Raleway', sans-serif",
+    },
+  });
+  const darkTheme = createMuiTheme({
+    palette: {
+      type: "dark",
+      primary: {
+        main: "#C9E265",
+      },
+
+      background: {
+        paper: "#737373",
+      },
+    },
+    typography: {
+      fontFamily: "'Raleway', sans-serif",
+    },
+  });
+
+  const handleThemeToggle = () => {
+    setDarkMode(!darkMode);
+  };
+  const configTheme = { darkMode, handleThemeToggle };
+
   return (
-    <div className="App">
-      <Header/>
-      <AdList/>
-      <Footer/>
-    </div>
+    <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+      <Paper>
+        <Header {...configTheme} />
+        <MainPage />
+        <Footer />
+      </Paper>
+    </ThemeProvider>
   );
-}
+};
 
 export default App;

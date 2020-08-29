@@ -1,13 +1,18 @@
 import { takeLatest, call, all, put } from "redux-saga/effects";
 import adTypes from "./ad.types";
-import { fetchAdsSuccess, adError } from "./ad.actions";
+import { fetchAdsSuccess, fetchAdsStart, adError } from "./ad.actions";
+import {
+  handleAddAd,
+  handleFetchAds,
+  handleLikeAd,
+  handleCommentAd,
+} from "./ad.helpers";
 
 // Fetch all ads
 export function* fetchAds() {
   try {
-    console.log("Fetch records from db");
-    console.log("Update state");
-    // yield put(fetchAdsSuccess(ads));
+    const ads = yield call(handleFetchAds);
+    yield put(fetchAdsSuccess(ads));
   } catch (error) {
     console.log(error);
   }
@@ -17,11 +22,18 @@ export function* onFetchAdsStart() {
 }
 
 // Add a new ad
-export function* addAdStart() {
+export function* addAdStart({ payload: { adTitle, adDesc, adUrl } }) {
   try {
-    console.log("Add a new record to db");
-    console.log("Update state");
-    // yield put(fetchAdsStart());
+    const timestamp = new Date();
+    yield handleAddAd({
+      adTitle,
+      adDesc,
+      adUrl,
+      createdDate: timestamp,
+      like: 0,
+      comments: [],
+    });
+    yield put(fetchAdsStart());
   } catch (error) {
     console.error(error);
   }
@@ -31,11 +43,10 @@ export function* onAddAdStart() {
 }
 
 // Like an ad
-export function* likeAdStart() {
+export function* likeAdStart({ payload: documentID }) {
   try {
-    console.log("Update a record to db");
-    console.log("Update state");
-    // yield put(fetchAdsStart());
+    yield call(handleLikeAd, documentID);
+    yield put(fetchAdsStart());
   } catch (error) {
     console.error(error);
   }
@@ -45,11 +56,15 @@ export function* onLikeAdStart() {
 }
 
 // Comment on an ad
-export function* commentAdStart() {
+export function* commentAdStart({ payload: { documentID, commentText } }) {
   try {
-    console.log("Update a record to db");
-    console.log("Update state");
-    // yield put(fetchAdsStart());
+    console.log("Saga: ", documentID, commentText);
+
+    const timestamp = new Date();
+    const comment = { commentText, commentDate: timestamp };
+    yield handleCommentAd(documentID, comment);
+
+    yield put(fetchAdsStart());
   } catch (error) {
     console.error(error);
   }

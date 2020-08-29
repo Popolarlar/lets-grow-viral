@@ -14,14 +14,14 @@ export const addAdStart = (ad) => ({
   payload: ad,
 });
 
-export const likeAdStart = (ad) => ({
+export const likeAdStart = (documentID) => ({
   type: adTypes.LIKE_AD_START,
-  payload: ad,
+  payload: documentID,
 });
 
-export const commentAdStart = (comment) => ({
+export const commentAdStart = (documentID, commentText) => ({
   type: adTypes.COMMENT_AD_START,
-  payload: comment,
+  payload: { documentID, commentText },
 });
 
 export const adError = (error) => ({

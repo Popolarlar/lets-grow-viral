@@ -1,15 +1,33 @@
-import React from "react";
-import {
- Container
-} from "@material-ui/core";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchAdsStart } from "./../../store/Ad/ad.actions";
+import { Grid } from "@material-ui/core";
+import Ad from "./../../components/Ad";
 
-const AdList = (props) => {
-  return <div className="adList">
-    <Container maxWidth="md"> 
-    <h1>Hi, this is Ad list</h1>
-    <p>Scroll and click to see the ads from local business. Lets help each others to get through this tough time :-)</p>
-    </Container>
-    </div>;
+const mapState = (state) => ({
+  ads: state.ad.ads,
+});
+
+const AdList = () => {
+  // Globle State
+  const dispatch = useDispatch();
+  const { ads } = useSelector(mapState);
+
+  useEffect(() => {
+    dispatch(fetchAdsStart());
+  }, []); // []: Only runs on first initial render of this component
+
+  return (
+    <Grid container spacing={3}>
+      {ads.map((ad, index) => {
+        return (
+          <Grid item xs={12} sm={6} md={4}>
+            <Ad key={index} ad={ad} />
+          </Grid>
+        );
+      })}
+    </Grid>
+  );
 };
 
 export default AdList;
