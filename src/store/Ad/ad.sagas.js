@@ -7,6 +7,7 @@ import {
   handleLikeAd,
   handleCommentAd,
   handleDeleteAd,
+  handleFetchAdsByLike,
 } from "./ad.helpers";
 
 // Fetch all ads
@@ -20,6 +21,19 @@ export function* fetchAds() {
 }
 export function* onFetchAdsStart() {
   yield takeLatest(adTypes.FETCH_ADS_START, fetchAds);
+}
+
+// Sort all ads by new
+export function* SortAdsByLike() {
+  try {
+    const ads = yield call(handleFetchAdsByLike);
+    yield put(fetchAdsSuccess(ads));
+  } catch (error) {
+    console.log(error);
+  }
+}
+export function* onSortAdsByLikeStart() {
+  yield takeLatest(adTypes.SORT_ADS_BY_LIKE_START, SortAdsByLike);
 }
 
 // Add a new ad

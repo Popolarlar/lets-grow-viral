@@ -29,6 +29,10 @@ export const deleteAdStart = (documentID) => ({
   payload: documentID,
 });
 
+export const sortAdsByLikeStart = () => ({
+  type: adTypes.SORT_ADS_BY_Like_START,
+});
+
 export const adError = (error) => ({
   type: adTypes.AD_ERROR,
   payload: error,

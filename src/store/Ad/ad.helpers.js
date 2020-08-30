@@ -4,6 +4,7 @@ export const handleFetchAds = () => {
   return new Promise((resolve, reject) => {
     firestore
       .collection("ads")
+      .orderBy("createdDate", "desc")
       .get()
       .then((snapshot) => {
         const ads = snapshot.docs.map((doc) => {
@@ -55,6 +56,22 @@ export const handleDeleteAd = (documentID) => {
       .doc(documentID)
       .delete()
       .then(() => resolve())
+      .catch((err) => reject(err));
+  });
+};
+
+export const handleFetchAdsByLike = () => {
+  return new Promise((resolve, reject) => {
+    firestore
+      .collection("ads")
+      .orderBy("like", "desc")
+      .get()
+      .then((snapshot) => {
+        const ads = snapshot.docs.map((doc) => {
+          return { ...doc.data(), documentID: doc.id };
+        });
+        resolve(ads);
+      })
       .catch((err) => reject(err));
   });
 };
