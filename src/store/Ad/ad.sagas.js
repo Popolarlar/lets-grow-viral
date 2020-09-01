@@ -40,7 +40,7 @@ export function* onSortAdsByLikeStart() {
 // Add a new ad
 export function* addAd({ payload: { adTitle, adDesc, adUrl, adFile } }) {
   try {
-    const downloadURL = yield call(handleFileUpload, adFile);
+    const downloadURL = adFile ? yield call(handleFileUpload, adFile) : "";
 
     const timestamp = new Date();
     yield handleAddAd({

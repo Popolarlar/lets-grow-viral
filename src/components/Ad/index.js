@@ -50,7 +50,6 @@ const useStyles = makeStyles((theme) => ({
     bottom: "50%",
     transform: "translateY(50%)",
     "& a": {
-      color: "white",
       fontWeight: "700",
     },
   },
@@ -161,8 +160,8 @@ const Ad = ({ ad }) => {
           <Typography>Delete</Typography>
         </Button>
 
-        <Button variant="contained" color="primary" className={classes.url}>
-          <Typography variant="h5">
+        <Button className={classes.url}>
+          <Typography variant="h5" color="primary">
             <Link
               href={adUrl}
               target="_blank"

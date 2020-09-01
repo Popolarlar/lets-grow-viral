@@ -77,9 +77,10 @@ export const handleFetchAdsByLike = () => {
 };
 
 export const handleFileUpload = (adFile) => {
+  const timestamp = new Date();
   return new Promise((resolve, reject) => {
     storage
-      .ref(`upload/${adFile.name}`)
+      .ref(`upload/${adFile.name}_${timestamp.toString()}`)
       .put(adFile)
       .then((snapshot) => snapshot.ref.getDownloadURL())
       .then((downloadURL) => {

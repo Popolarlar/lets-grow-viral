@@ -97,16 +97,18 @@ const NewAdForm = ({ dialogOpen, handleDialogClose }) => {
         onChange={(e) => setAdDesc(e.target.value)}
       />
       <TextField
-        label="URL"
+        label="Website"
         required
         value={adUrl}
         onChange={(e) => setAdUrl(e.target.value)}
       />
       <input
         type="file"
-        required
+        id="file"
+        accept="video/*"
         onChange={(e) => setAdFile(e.target.files[0])}
       />
+
       <DialogActions>
         <Button onClick={handleCancleClick}>Cancel</Button>
         <Button type="submit" variant="contained" color="primary">
@@ -121,7 +123,7 @@ const NewAdForm = ({ dialogOpen, handleDialogClose }) => {
       <IconButton aria-label="success" color="inherit">
         <CheckCircleIcon fontSize="large" />
       </IconButton>
-      <Typography variant="h4" color="inherit">
+      <Typography color="inherit" variant="h4" component="span">
         Post success!
       </Typography>
     </DialogContentText>
