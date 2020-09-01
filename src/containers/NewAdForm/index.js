@@ -42,6 +42,7 @@ const NewAdForm = ({ dialogOpen, handleDialogClose }) => {
   const [adTitle, setAdTitle] = useState("");
   const [adDesc, setAdDesc] = useState("");
   const [adUrl, setAdUrl] = useState("");
+  const [adFile, setAdFile] = useState(null);
 
   const handleCancleClick = (e) => {
     e.preventDefault();
@@ -57,6 +58,7 @@ const NewAdForm = ({ dialogOpen, handleDialogClose }) => {
         adTitle,
         adDesc,
         adUrl,
+        adFile,
       })
     );
 
@@ -73,6 +75,7 @@ const NewAdForm = ({ dialogOpen, handleDialogClose }) => {
     setAdTitle("");
     setAdDesc("");
     setAdUrl("");
+    setAdFile(null);
   };
 
   const Form = (
@@ -95,8 +98,14 @@ const NewAdForm = ({ dialogOpen, handleDialogClose }) => {
       />
       <TextField
         label="URL"
+        required
         value={adUrl}
         onChange={(e) => setAdUrl(e.target.value)}
+      />
+      <input
+        type="file"
+        required
+        onChange={(e) => setAdFile(e.target.files[0])}
       />
       <DialogActions>
         <Button onClick={handleCancleClick}>Cancel</Button>

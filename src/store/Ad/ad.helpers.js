@@ -1,4 +1,4 @@
-import { firestore, FieldValue } from "./../../global/firebase/utils";
+import { firestore, FieldValue, storage } from "./../../global/firebase/utils";
 
 export const handleFetchAds = () => {
   return new Promise((resolve, reject) => {
@@ -71,6 +71,20 @@ export const handleFetchAdsByLike = () => {
           return { ...doc.data(), documentID: doc.id };
         });
         resolve(ads);
+      })
+      .catch((err) => reject(err));
+  });
+};
+
+export const handleFileUpload = (adFile) => {
+  return new Promise((resolve, reject) => {
+    storage
+      .ref(`upload/${adFile.name}`)
+      .put(adFile)
+      .then((snapshot) => snapshot.ref.getDownloadURL())
+      .then((downloadURL) => {
+        console.log("File available at", downloadURL);
+        resolve(downloadURL);
       })
       .catch((err) => reject(err));
   });

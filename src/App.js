@@ -7,7 +7,6 @@ import { Paper } from "@material-ui/core";
 import MainPage from "./containers/MainPage";
 import Header from "./containers/Header";
 import Footer from "./components/Footer";
-import { SportsRugbySharp } from "@material-ui/icons";
 
 const App = () => {
   // Handle theme

@@ -14,10 +14,11 @@ import {
   CardActionArea,
   CardActions,
   Collapse,
-  IconButton,
   Typography,
   TextField,
   Box,
+  Button,
+  Link,
 } from "@material-ui/core";
 import { Favorite, InsertComment, Delete } from "@material-ui/icons";
 import Comment from "./../Comment";
@@ -27,18 +28,31 @@ const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: "100%",
     maxHeight: "100%",
-
-    "& .MuiCardActions-root": {
-      "& .MuiSvgIcon-root": {
-        marginRight: theme.spacing(1),
-      },
-    },
   },
   media: {
     height: 200,
   },
   comments: {
     paddingTop: theme.spacing(2),
+  },
+
+  actions: {
+    position: "relative",
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
+  },
+
+  url: {
+    borderRadius: "50%",
+    position: "absolute",
+    padding: theme.spacing(1),
+    right: theme.spacing(2),
+    bottom: "50%",
+    transform: "translateY(50%)",
+    "& a": {
+      color: "white",
+      fontWeight: "700",
+    },
   },
 }));
 
@@ -50,6 +64,7 @@ const Ad = ({ ad }) => {
     adTitle,
     adDesc,
     adUrl,
+    adLink,
     createdDate,
     like,
     comments,
@@ -60,6 +75,24 @@ const Ad = ({ ad }) => {
   // Local state
   const [expanded, setExpanded] = useState(false);
   const [commentText, setCommentText] = useState("");
+
+  const handleMediaClick = (e) => {
+    const root = e.target.closest(".MuiCardActionArea-root");
+    const elem = root.querySelector(".MuiCardMedia-media");
+
+    if (elem.requestFullscreen) {
+      elem.requestFullscreen();
+    } else if (elem.mozRequestFullScreen) {
+      /* Firefox */
+      elem.mozRequestFullScreen();
+    } else if (elem.webkitRequestFullscreen) {
+      /* Chrome, Safari and Opera */
+      elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) {
+      /* IE/Edge */
+      elem.msRequestFullscreen();
+    }
+  };
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -81,15 +114,31 @@ const Ad = ({ ad }) => {
     dispatch(deleteAdStart(documentID));
   };
 
+  const VideoMedia = (
+    <CardMedia
+      component="video"
+      className={classes.media}
+      loop
+      image={adLink}
+      title={adTitle}
+      onMouseOver={(e) => e.target.play()}
+      onMouseOut={(e) => e.target.pause()}
+    />
+  );
+
+  const ImgMedia = (
+    <CardMedia
+      component="img"
+      className={classes.media}
+      image={ComingSoonImg}
+      title={adTitle}
+    />
+  );
+
   return (
     <Card className={classes.root}>
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          className={classes.media}
-          image={adUrl ? adUrl : ComingSoonImg}
-          title={adTitle}
-        />
+      <CardActionArea onClick={handleMediaClick}>
+        {adLink ? VideoMedia : ImgMedia}
         <CardHeader title={adTitle} subheader={date} />
       </CardActionArea>
 
@@ -99,29 +148,31 @@ const Ad = ({ ad }) => {
         </Typography>
       </CardContent>
 
-      <CardActions disableSpacing>
-        <IconButton aria-label="like" onClick={handleLikeClick}>
-          <Favorite />
+      <CardActions className={classes.actions}>
+        <Button startIcon={<Favorite />} onClick={handleLikeClick}>
           <Typography>{like}</Typography>
-        </IconButton>
+        </Button>
 
-        <IconButton
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <InsertComment />
+        <Button startIcon={<InsertComment />} onClick={handleExpandClick}>
           <Typography>{comments.length}</Typography>
-        </IconButton>
+        </Button>
 
-        <IconButton
-          aria-label="delete"
-          onClick={handleDeleteClick}
-          className={classes.delete}
-        >
-          <Delete />
+        <Button startIcon={<Delete />} onClick={handleDeleteClick}>
           <Typography>Delete</Typography>
-        </IconButton>
+        </Button>
+
+        <Button variant="contained" color="primary" className={classes.url}>
+          <Typography variant="h5">
+            <Link
+              href={adUrl}
+              target="_blank"
+              underline="none"
+              rel="noopener noreferrer"
+            >
+              Go
+            </Link>
+          </Typography>
+        </Button>
       </CardActions>
 
       <Collapse in={expanded} timeout="auto" unmountOnExit>

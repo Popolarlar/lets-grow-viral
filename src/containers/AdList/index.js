@@ -21,8 +21,8 @@ const AdList = () => {
     <Grid container spacing={3}>
       {ads.map((ad, index) => {
         return (
-          <Grid item xs={12} sm={6} md={4}>
-            <Ad key={index} ad={ad} />
+          <Grid key={index} item xs={12} sm={6} md={4}>
+            <Ad ad={ad} />
           </Grid>
         );
       })}
